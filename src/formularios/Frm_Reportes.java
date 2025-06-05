@@ -6,8 +6,12 @@ package formularios;
 
 import Controladores.reportes;
 import Controladores.ventas;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelos.modelo_Venta;
 
 /**
@@ -136,7 +140,14 @@ public class Frm_Reportes extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        reportes rp = new reportes();
+        try {
+            rp.instanciarfactura(lista_Ventas, tbl_Reportes);
+        } catch (SQLException ex) {
+           ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

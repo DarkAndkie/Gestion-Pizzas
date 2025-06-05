@@ -13,6 +13,7 @@ public class DetalleVenta {
     private String nombrepizza;
     private int cantidad_pizza;
     private double precio_venta;
+    private double total_SubVenta;
 
     public int getId_pizza() {
         return id_pizza;
@@ -35,6 +36,11 @@ public class DetalleVenta {
         this.nombrepizza = nombrepizza;
         this.cantidad_pizza = cantidad_pizza;
         this.precio_venta = precio_venta;
+        this.total_SubVenta=precio_venta*cantidad_pizza;
+    }
+
+    public double getTotal_SubVenta() {
+        return total_SubVenta;
     }
 
 
