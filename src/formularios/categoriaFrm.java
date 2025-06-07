@@ -36,9 +36,7 @@ public class categoriaFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         categoriaNametxt = new javax.swing.JTextField();
-        idCatSpiner = new javax.swing.JSpinner();
         jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         catSpiner = new javax.swing.JSpinner();
         jButton2 = new javax.swing.JButton();
 
@@ -49,17 +47,6 @@ public class categoriaFrm extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel2.setText("Utilidad al valor:");
-
-        idCatSpiner.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                idCatSpinerStateChanged(evt);
-            }
-        });
-        idCatSpiner.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                idCatSpinerKeyTyped(evt);
-            }
-        });
 
         jButton1.setText("Agregar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -72,9 +59,6 @@ public class categoriaFrm extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel3.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
-        jLabel3.setText("ID Categoría:");
 
         catSpiner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -99,18 +83,12 @@ public class categoriaFrm extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(idCatSpiner)
                     .addComponent(categoriaNametxt, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                     .addComponent(catSpiner))
                 .addContainerGap(49, Short.MAX_VALUE))
@@ -124,15 +102,11 @@ public class categoriaFrm extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(idCatSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addGap(74, 74, 74)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(categoriaNametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(catSpiner, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -157,43 +131,26 @@ public class categoriaFrm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void idCatSpinerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_idCatSpinerStateChanged
-        int cant = (int)idCatSpiner.getValue();
-        if(cant<=0 || cant > 100){
-            JOptionPane.showMessageDialog(null, "No puede ser una cantidad menor a 0 o superior a 100");
-            idCatSpiner.setValue(0);
-        }
-    }//GEN-LAST:event_idCatSpinerStateChanged
-
-    private void idCatSpinerKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_idCatSpinerKeyTyped
-
-    }//GEN-LAST:event_idCatSpinerKeyTyped
-
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
 
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         agregacionesJdbc cn = new agregacionesJdbc();
-        consultas cs = new consultas();
-        int id = (int) idCatSpiner.getValue();
         int cant =  (int) catSpiner.getValue();
         boolean ifExist = false;
-        ifExist=cs.buscarUnicoEle("categoria", "id_categoria = "+id, "id_categoria");
-        if(id<=0 || id>100
-            || categoriaNametxt.getText().equals("") ||cant<=0
+        if(categoriaNametxt.getText().equals("") ||cant<=0
             || cant>=100 || ifExist == true){
             JOptionPane.showMessageDialog(null, "Recuerde que las cantidades debn ser validas"
                 + "el id no puede repetirse y el nombre no estar vacio");
 
         }else{
             try {
-                cn.insertarCat(id,categoriaNametxt.getText(), cant);
+                cn.insertarCat(categoriaNametxt.getText(), cant);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al insertar la categoría" + e,"Error",
                     JOptionPane.ERROR_MESSAGE);
             }
-            idCatSpiner.setValue(1);
             categoriaNametxt.setText("");
             catSpiner.setValue(0);
         }
@@ -257,12 +214,10 @@ public class categoriaFrm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner catSpiner;
     private javax.swing.JTextField categoriaNametxt;
-    private javax.swing.JSpinner idCatSpiner;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

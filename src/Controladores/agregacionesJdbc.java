@@ -99,18 +99,17 @@ public class agregacionesJdbc {
         }
     }
     
-    public void insertarCat(int id_cat,String name, int utilidad) throws SQLException{
+    public void insertarCat(String name, int utilidad) throws SQLException{
        conexion_postgres cn =  new conexion_postgres();
        PreparedStatement ps = null;
         System.out.println("utilidad al llegar es"+utilidad);
-       String query = "INSERT INTO categoria (id_categoria,nombre_cat, utilidad) values (?,?,?)";
+       String query = "INSERT INTO categoria (nombre_cat, utilidad) values (?,?)";
        float utilidadReal = (float)(100 - utilidad)/100;
         System.out.println("al convertirse es"+ utilidadReal);
         try {
             ps = cn.nuevaConexion().prepareStatement(query);
-            ps.setInt(1, id_cat);
-            ps.setString(2, name);
-            ps.setDouble(3, utilidadReal);
+            ps.setString(1, name);
+            ps.setDouble(2, utilidadReal);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "agregado correctamente" + " Utilidad:"+utilidadReal);
         } catch (Exception e) {
